@@ -22,6 +22,11 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    if params[:post][:image]
+      @post.image.attach(params[:post][:image])
+    else
+      @post.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'rails.png')), filename: 'rails.png', content_type: 'image/png')
+    end
 
     respond_to do |format|
       if @post.save
@@ -65,6 +70,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:name, :text)
+      params.require(:post).permit(:name, :text, :user_id)
     end
 end

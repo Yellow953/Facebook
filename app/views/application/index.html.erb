@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+    <% @feed.each do |post| %>
+        <%= render post %> 
+        <div class="d-flex flex-row justify-content-between">
+            <div>
+                <%= link_to "Like", "", class:'btn btn-primary m-1'  %>
+                <%= link_to "Comments", post_comments_url(id: post.id), class:'btn btn-primary m-1' %>
+            </div>
+            <div class="d-flex flex-row">
+                <%= link_to "Edit this post", edit_post_path(post), class:"btn btn-warning m-1" %>
+                <%= button_to "Delete", post, method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger m-1" %>
+            </div>
+        </div>
+        <hr>
+    <% end %>
+<% else %>
+
+<% end %>
