@@ -4,20 +4,30 @@
       <%= image_tag post.image, class:"img-fluid img-responsive p-2" if post.image.attached? %>
     </div>
     <div class="col-10 my-auto">
-       <p>
-    <strong>Name:</strong>
-    <%= post.name %>
-  </p>
+      <p>
+        <strong>Name:</strong>
+        <%= post.name %>
+      </p>
 
-  <p>
-    <strong>Text:</strong>
-    <%= post.text %>
-  </p>
+      <p>
+        <strong>Text:</strong>
+        <%= post.text %>
+      </p>
 
-  <p>
-    <strong>User: </strong>
-    <%= post.user.email %>
-  </p>
+      <p>
+        <strong>User: </strong>
+        <%= post.user.email %>
+      </p>
+
+      <p>
+        <strong>Comments: </strong>
+        <%= post.comments.count %>
+      </p>
+
+      <p>
+        <strong>Likes: </strong>
+        <%= post.likes.count %>
+      </p>
     </div>
   </div>
 </div>

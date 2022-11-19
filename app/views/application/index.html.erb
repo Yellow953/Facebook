@@ -2,17 +2,32 @@
     <% @feed.each do |post| %>
         <%= render post %> 
         <div class="d-flex flex-row justify-content-between">
-            <div>
-                <%= link_to "Like", "", class:'btn btn-primary m-1'  %>
+            <div class="d-flex">
+                <%= form_with(model: @like) do |form| %>
+                    <%= form.hidden_field :user_id, value: current_user.id %>
+                    <%= form.hidden_field :post_id, value: post.id %>
+                    <%= form.submit "Like", class:"btn btn-primary m-1" %>
+                <% end %>
+                <% current_user.likes.each do |like| %>
+                    <% if like.post.id  == post.id %>
+                        <%= button_to "Unlike", like_url(like), method: :delete, class:"btn btn-primary m-1" %>
+                    <% end %>
+                <% end %>
+                
                 <%= link_to "Comments", post_comments_url(id: post.id), class:'btn btn-primary m-1' %>
             </div>
-            <div class="d-flex flex-row">
-                <%= link_to "Edit this post", edit_post_path(post), class:"btn btn-warning m-1" %>
-                <%= button_to "Delete", post, method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger m-1" %>
+            <div class="d-flex">
+                <% if post.user_id == current_user.id %>
+                    <%= link_to "Edit this post", edit_post_path(post), class:"btn btn-warning m-1" %>
+                    <%= button_to "Delete", post, method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger m-1" %>
+                <% end %>
             </div>
         </div>
         <hr>
     <% end %>
 <% else %>
-
+    You are not Signed in <br>
+    Please sign in to explore the full application <br>
+    <%= link_to "Log in", new_user_session_url %> or 
+    <%= link_to "Register", new_user_registration_url %>
 <% end %>

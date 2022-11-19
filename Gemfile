@@ -18,10 +18,11 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 gem "sassc-rails"
 gem "devise"
-gem "will_paginate"
-gem "bootstrap-will_paginate"
 gem "active_storage_validations"
 gem "image_processing"
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

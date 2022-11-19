@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
-    before_action :authenticate_user!, only: %i[ index comments profile edit_user ]
+    before_action :authenticate_user!, only: %i[ comments profile edit_user users user_requests]
 
 
     def index
         @feed = Post.all
+        @like = Like.new
     end
     
     def comments
@@ -18,19 +19,29 @@ class ApplicationController < ActionController::Base
 
     def edit_user
         @user = current_user
-        if @user.update user_params
+        if @user.update params.require(:user).permit(:username, :phone)
             flash[:warning] = "you updated your values"
         end
         if params[:image]
             @user.image.attach(params[:image])
-        end
-        
+        end   
     end
    
-    private
-
-    def user_params
-        params.permit(:email, :username, :phone)
+    def users
+        if params[:email]
+            @result = User.where("email LIKE ?", "%" + params[:email] + "%")
+        else
+            @result = User.all
+        end  
+        @friend_request = FriendRequest.new 
     end
-
+    
+    def user_requests
+        @users = User.all
+        @requests = FriendRequest.all
+    end
+    
+    def accept
+    
+    end
 end

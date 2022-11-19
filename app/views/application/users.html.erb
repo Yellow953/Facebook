@@ -1,0 +1,30 @@
+
+<div class="p-4"> 
+        <%= form_for( get_users_url , method: :get) do |form| %>
+            <h2>Search For User</h2>
+            <div class="d-flex flex-row">
+                <%= form.text_field :email, class:"form-control m-2" %>
+                <%= form.submit "Search", class:"btn btn-primary" %>
+            </div>    
+        <% end %><hr>
+
+        <% if @result %>
+            <h2 class="my-2 mt-5">Users</h2>
+            <% @result.each do |u| %>
+                <div class="card m-2 p-2">
+                    <div class="row">
+                        <div class="col-8">
+                            <%= u.email %>
+                        </div>
+                        <div class="col-4">    
+                            <%= form_with(model: @friend_request) do |form| %>
+                                <%= form.hidden_field :from, value: current_user.id %>
+                                <%= form.hidden_field :to, value: u.id %>
+                                <%= form.submit "Add Friend", class:"btn btn-primary m-2" %><br>    
+                            <% end %>
+                        </div>
+                    </div>    
+                </div>    
+            <% end %>
+        <% end %>
+</div>
