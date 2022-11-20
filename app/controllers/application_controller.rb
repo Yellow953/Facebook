@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
     
     def profile
         @user = current_user
+        @users = User.all
     end
 
     def edit_user
@@ -39,9 +40,6 @@ class ApplicationController < ActionController::Base
     def user_requests
         @users = User.all
         @requests = FriendRequest.all
-    end
-    
-    def accept
-    
+        @friend = Friend.new
     end
 end

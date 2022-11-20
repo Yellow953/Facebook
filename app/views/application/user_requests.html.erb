@@ -12,7 +12,11 @@
                     <% end %>   
                 </div>
                 <div class="col-4 d-flex">
-                    <%= link_to "Accept", accept_url(r.id), class:"btn btn-success m-2" %>
+                    <%= form_with(model: @friend) do |form| %>
+                        <%= form.hidden_field :user_id, value: current_user.id %>
+                        <%= form.hidden_field :friend_with, value: r.to %>
+                        <%= form.submit "Accept", class:"btn btn-success m-2"%>
+                    <% end %>
                     <%= button_to "Decline", friend_request_url(r.id), method: :delete, class:"btn btn-danger m-2" %>
                 </div>
             </div>        

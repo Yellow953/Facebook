@@ -3,8 +3,8 @@
         <%= form_for( get_users_url , method: :get) do |form| %>
             <h2>Search For User</h2>
             <div class="d-flex flex-row">
-                <%= form.text_field :email, class:"form-control m-2" %>
-                <%= form.submit "Search", class:"btn btn-primary" %>
+                <%= form.text_field :email, class:"form-control" %>
+                <%= form.submit "Search", class:"btn btn-primary mx-1" %>
             </div>    
         <% end %><hr>
 
@@ -17,11 +17,13 @@
                             <%= u.email %>
                         </div>
                         <div class="col-4">    
-                            <%= form_with(model: @friend_request) do |form| %>
-                                <%= form.hidden_field :from, value: current_user.id %>
-                                <%= form.hidden_field :to, value: u.id %>
-                                <%= form.submit "Add Friend", class:"btn btn-primary m-2" %><br>    
-                            <% end %>
+                            <% if u.id != current_user.id %>
+                                <%= form_with(model: @friend_request) do |form| %>
+                                    <%= form.hidden_field :from, value: current_user.id %>
+                                    <%= form.hidden_field :to, value: u.id %>
+                                    <%= form.submit "Add Friend", class:"btn btn-primary m-2" %><br>    
+                                <% end %>
+                            <% end %>    
                         </div>
                     </div>    
                 </div>    
