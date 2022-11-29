@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
 
     def index
-        @feed = Post.all
+        @feed = Post.paginate(page: params[:page], per_page: 25)
         @like = Like.new
     end
     

@@ -23,6 +23,9 @@ gem "image_processing"
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
+gem "faker"
+gem "will_paginate"
+gem "will_paginate-bootstrap"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
