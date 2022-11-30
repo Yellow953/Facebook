@@ -29,11 +29,8 @@ class ApplicationController < ActionController::Base
     end
    
     def users
-        if params[:email]
-            @result = User.where("email LIKE ?", "%" + params[:email] + "%")
-        else
-            @result = User.all
-        end  
+        @query = User.ransack(params[:q])
+        @result = @query.result(distinct: true)
         @friend_request = FriendRequest.new 
     end
     

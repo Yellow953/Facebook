@@ -26,6 +26,7 @@ gem 'omniauth-rails_csrf_protection'
 gem "faker"
 gem "will_paginate"
 gem "will_paginate-bootstrap"
+gem "ransack"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
