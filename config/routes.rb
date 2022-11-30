@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   resources :posts
   devise_for :users
 
-  get "/profile", to: "application#profile", as: "profile"
-  post "/profile", to: "application#edit_user", as: "edit_user"
+  get "/profile/:name", to: "application#profile", as: "profile"
+  post "/profile/:name", to: "application#edit_user", as: "edit_user"
   
   get "/post/:id/comments", to:"application#comments", as: "post_comments"
   post "/post/:id/comments", to: "application#create_comment", as: "create_post_comment"
@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   get "/users", to:"application#users", as:"get_users"
 
   get "/request/:id/accept", to: "application#accept", as:"accept"
-
 
   root "application#index"
 end
