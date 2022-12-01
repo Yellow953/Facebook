@@ -3,7 +3,12 @@ class ApplicationController < ActionController::Base
 
 
     def index
-        @feed = Post.paginate(page: params[:page], per_page: 25)
+        if  params.require(:/).permit(:user, :likes, :from, :to)
+            puts params[:user]
+            @feed = Post.where(user_id: params[:user]).paginate(page: params[:page], per_page: 25)
+        else
+            @feed = Post.paginate(page: params[:page], per_page: 25)
+        end
         @like = Like.new
     end
     
