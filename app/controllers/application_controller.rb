@@ -1,11 +1,29 @@
 class ApplicationController < ActionController::Base
     before_action :authenticate_user!, only: %i[ comments profile edit_user users user_requests]
 
-
     def index
-        if  params.require(:/).permit(:user, :likes, :from, :to)
-            puts params[:user]
-            @feed = Post.where(user_id: params[:user]).paginate(page: params[:page], per_page: 25)
+        if  params[:user] || params[:likes] || params[:from] || params[:to]    
+            if params[:likes] != ""
+                res = []
+                posts = Post.all
+                posts.each do |post|
+                    if post.likes.count.to_i >= params[:likes].to_i
+                        res.append(post)
+                    end
+                end
+                @feed = Post.where(id: res).paginate(page: params[:page], per_page: 25)
+            elsif params[:from] != ""
+                @feed = Post.where('created_at >= :from', :from => params[:from]).paginate(page: params[:page], per_page: 25)
+            elsif params[:to] != ""
+                @feed = Post.where('created_at <= :to', :to => params[:to]).paginate(page: params[:page], per_page: 25)
+            elsif params[:from] != "" && params[:to] != ""
+                @feed = Post.where(:created_at => params[:from]..params[:to]).paginate(page: params[:page], per_page: 25)
+                @comments = Comment.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
+            elsif params[:likes] != ""
+                @feed = ""
+            elsif params[:user]!= ""
+                @feed = Post.where(user_id: params[:user]).paginate(page: params[:page], per_page: 25)
+            end    
         else
             @feed = Post.paginate(page: params[:page], per_page: 25)
         end
